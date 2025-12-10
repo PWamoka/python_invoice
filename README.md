@@ -52,3 +52,32 @@ Setup Instructions
 	b. Learn the small pieces: Python functions, Decimal for money, SQLAlchemy models, Flask routes, template rendering, JavaScript for a nicer client.
 
 Common Issues
+
+Problem: Floating-point rounding errors (e.g., 0.1 + 0.2 != 0.3)
+Solution: Use Decimal everywhere for prices, tax calculations and totals. Quantize (round) at the correct points (commonly to 2 decimals).
+
+Problem:Wrong rounding policy (per-line rounding vs invoice-level rounding)
+Solution: Decide policy early. Typical approach: round each line to 2 decimals then sum; or compute sums in high precision and round final totals. Document and implement consistently.
+
+Problem: VAT inclusive vs exclusive miscalculations
+Solution: Implement and test formulas for each type separately:Problem: 
+
+Problem: Problem: "flask: command not found" or wrong Python version
+Solution: python -m venv venv source venv/bin/activate # macOS/Linux .\venv\Scripts\activate # Windows PowerShell pip install -r requirements.txt
+
+Reference
+Python official docs — tutorial and library reference
+https://docs.python.org/3/
+
+
+Flask official docs (Quickstart + Tutorial)
+https://flask.palletsprojects.com/
+
+decimal — precise money math (Python stdlib)
+https://docs.python.org/3/library/decimal.html
+
+
+
+Author
+
+Built by Paul W for the New Stack learning; a start up mini-project using GenAI for setup, debugging and documentation.
