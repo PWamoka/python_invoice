@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ invoice.title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .invoice-box { border: 1px solid #eee; padding: 20px; width: 800px; margin: auto; }
+        h1 { text-align: center; }
+        .header-info, .billing-info, .totals { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        table th, table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .text-right { text-align: right; }
+        .genai-title { color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="invoice-box">
+        <!-- The GenAI Generated Title -->
+        <h1 class="genai-title">{{ invoice.title }}</h1>
+        
+        <div class="header-info">
+            <p><strong>Invoice #:</strong> {{ invoice.invoice_number }}</p>
+            <p><strong>Date Issued:</strong> {{ invoice.date_issued }}</p>
+            <p><strong>Due Date:</strong> {{ invoice.due_date }}</p>
+        </div>
+
+        <hr>
+
+        <div class="billing-info">
+            <p><strong>Bill To:</strong> {{ invoice.client_name }}</p>
+            <p>123 Main Street, Anytown, USA</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Hours</th>
+                    <th>Rate</th>
+                    <th class="text-right">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in invoice.line_items %}
+                <tr>
+                    <td>{{ item.desc }}</td>
+                    <td>{{ item.hours }}</td>
+                    <td>${{ item.rate }}</td>
+                    <td class="text-right">${{ (item.hours * item.rate) | format(2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="totals text-right">
+            <p>Subtotal: **{{ invoice.subtotal }}**</p>
+            <p>Tax (8%): **{{ invoice.tax_amount }}**</p>
+            <h2>**Grand Total: {{ invoice.grand_total }}**</h2>
+        </div>
+        
+        <p style="text-align: center; margin-top: 40px;">*Thank you for your business!*</p>
+    </div>
+</body>
+</html>

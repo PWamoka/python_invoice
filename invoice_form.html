@@ -1,0 +1,61 @@
+<!-- templates/invoice_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create New Invoice</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .form-box { padding: 30px; width: 600px; margin: auto; border: 1px solid #ddd; }
+        h1 { text-align: center; color: #007bff; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; border: 1px solid #ccc; }
+        .line-item-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-bottom: 15px; border: 1px dashed #ccc; padding: 10px; }
+        .line-item-grid-header { font-weight: bold; text-align: center; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; width: 100%; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>Create Dynamic Invoice (GenAI Powered)</h1>
+        
+        <!-- Form submission targets the new /invoice route with POST method -->
+        <form action="{{ url_for('generate_dynamic_invoice') }}" method="POST">
+            
+            <label for="client_name">Client Name</label>
+            <input type="text" id="client_name" name="client_name" required value="New Client Corp">
+
+            <label for="invoice_number">Invoice Number</label>
+            <input type="text" id="invoice_number" name="invoice_number" required value="INV-2026-0001">
+
+            <h2>Line Items (Max 3 for this example)</h2>
+
+            <div class="line-item-grid-header" style="grid-template-columns: 2fr 1fr 1fr; display: grid;">
+                <span>Description</span><span>Hours</span><span>Rate</span>
+            </div>
+            
+            <!-- Item 1 -->
+            <div class="line-item-grid">
+                <input type="text" name="desc_1" placeholder="Consulting" value="Initial consultation">
+                <input type="number" name="hours_1" step="0.5" placeholder="10" value="5">
+                <input type="number" name="rate_1" step="0.01" placeholder="100.00" value="100.00">
+            </div>
+
+            <!-- Item 2 -->
+            <div class="line-item-grid">
+                <input type="text" name="desc_2" placeholder="Development" value="Website redesign">
+                <input type="number" name="hours_2" step="0.5" placeholder="20" value="20">
+                <input type="number" name="rate_2" step="0.01" placeholder="85.00" value="85.00">
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="line-item-grid">
+                <input type="text" name="desc_3" placeholder="Licensing" value="Annual software license">
+                <input type="number" name="hours_3" step="0.5" placeholder="1" value="1">
+                <input type="number" name="rate_3" step="0.01" placeholder="500.00" value="500.00">
+            </div>
+            
+            <button type="submit">GENERATE INVOICE with AI Title</button>
+        </form>
+    </div>
+</body>
+</html>
